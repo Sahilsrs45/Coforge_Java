@@ -3,14 +3,8 @@ package com.coforge.servlets;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
+import java.sql.PreparedStatement;
  
-import com.coforge.model.Customer;
- 
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -18,15 +12,12 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
  
-/**
-* Servlet implementation class CustomerDetailsServlet
-*/
-@WebServlet("/CustomerDetailsServlet")
-public class CustomerDetailsServlet extends HttpServlet {
+@WebServlet("/AddCustomerServlet")
+public class AddCustomerServlet extends HttpServlet {
  
     private static final long serialVersionUID = 1L;
  
-    static Connection con = null;
+    Connection con = null;
  
     @Override
     public void init() throws ServletException {
@@ -42,7 +33,7 @@ public class CustomerDetailsServlet extends HttpServlet {
                     context.getInitParameter("uname"),
                     context.getInitParameter("pwd"));
  
-            System.out.println("CustomerDetailsServlet DB Connected");
+            System.out.println("AddCustomerServlet DB Connected");
  
         } catch (Exception e) {
             e.printStackTrace();
@@ -53,35 +44,39 @@ public class CustomerDetailsServlet extends HttpServlet {
             HttpServletResponse response)
             throws ServletException, IOException {
  
-        ArrayList<Customer> customerList = new ArrayList<>();
- 
         try {
  
-            Statement st = con.createStatement();
+            String query =
+                    "insert into customer values(?,?,?)";
  
-            ResultSet rs = st.executeQuery(
-                    "select * from customer");
+            PreparedStatement ps =
+                    con.prepareStatement(query);
  
-            while (rs.next()) {
+            ps.setInt(1,
+                    Integer.parseInt(
+                            request.getParameter("cid")));
  
-                Customer c = new Customer(
-                        rs.getInt(1),
-                        rs.getString(2),
-                        rs.getString(3));
+            ps.setString(2,
+                    request.getParameter("cname"));
  
-                customerList.add(c);
+            ps.setString(3,
+                    request.getParameter("city"));
+ 
+            int rows = ps.executeUpdate();
+ 
+            if (rows > 0) {
+ 
+                System.out.println(
+                        "Customer Added Successfully");
+ 
             }
+ 
+            response.sendRedirect(
+                    "CustomerDetailsServlet");
  
         } catch (Exception e) {
             e.printStackTrace();
         }
- 
-        request.setAttribute("customerList", customerList);
- 
-        RequestDispatcher rd =
-                request.getRequestDispatcher("details.jsp");
- 
-        rd.forward(request, response);
     }
  
     protected void doPost(HttpServletRequest request,

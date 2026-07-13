@@ -23,7 +23,7 @@
 	</tr>
 	
 	<%
-		ArrayList<Customer> customerList =(ArrayList<Customer>) request.getAttribute("customers");
+		ArrayList<Customer> customerList =(ArrayList<Customer>) request.getAttribute("customerList");
 		for(Customer c:customerList){
 	%>
 	
@@ -33,7 +33,13 @@
 	<td><%= c.getCity() %></td>
 	<td>
 	<a class = "btn btn-success" href = "update.jsp">Update</a>
-	<a class = "btn btn-danger" href = "delete.jsp">Delete</a>
+	<a class = "btn btn-danger" href = "delete.jsp">Delete</a> 
+	
+	
+	
+	
+
+	
 	</td>
 	</tr>
 	<%} %>
