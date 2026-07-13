@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           https://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/context
+           https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- Bean definitions go here -->
+    <!-- <context:property-placeholder   location="classpath:data.properties"/> -->
+    <bean id="comp" class="com.coforge.bean.Company" autowire="constructor">  
+    <!-- <constructor-arg name="uid" value="${Company.uid}"></constructor-arg>
+    <constructor-arg name="cName" value="${Company.cName}"></constructor-arg>
+    <constructor-arg name="address" value="${Company.address}"></constructor-arg> --> 
+   <!--  <constructor-arg name="programmer" ref="prg"></constructor-arg> -->
+   <!-- </bean> -->
+   
+   <property name = "uid" value="${Company.uid}"></property>
+		<property name = "cName" value="${Company.cName}"></property>
+		<property name = "address" value="${Company.address}"></property>
+		
+		
+		</bean>
+		
+		<bean name = "prg" class="com.coforge.bean.Programmer">
+		<property name = "name" value="${Programmer.name}"></property>
+		<property name = "id" value="${Programmer.id}"></property>
+		<property name = "skillSet" value ="#{ '${Programmer.skillSet}'.split(',')}" >
+ 
+		
+		</property>
+		
+		</bean>
+
+</beans>
