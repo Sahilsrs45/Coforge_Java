@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           https://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/context
+           https://www.springframework.org/schema/context/spring-context.xsd">
+           
+           <context:property-placeholder location="classpath:data.properties"/>
+           <bean id="emp1" class="com.coforge.beans.Employee">
+           <property name="eid" value="${emp1.eid}"></property>
+           <property name="ename" value="${emp1.ename}"></property>
+           <property name="salary" value="${emp1.salary}"></property>
+           <property name="mobileno" value="${emp1.mobileno}"></property>
+           <property name="email" value="${emp1.email}"></property>
+           </bean>
+           
+           <bean id="emp2" class="com.coforge.beans.Employee">
+           <property name="eid" value="${emp2.eid}"></property>
+           <property name="ename" value="${emp2.ename}"></property>
+           <property name="salary" value="${emp2.salary}"></property>
+           <property name="mobileno" value="${emp2.mobileno}"></property>
+           <property name="email" value="${emp2.email}"></property>  
+           </bean>
+           
+           
+           <bean id="dept" class="com.coforge.beans.Department" autowire="constructor">
+           <property name="id" value="${dept.id}"></property>
+           <property name="name" value="${dept.name}"></property>
+           <property name="loc" value="${dept.loc}"></property>
+           <constructor-arg>
+           <list>
+           <ref bean="emp1"/>
+           <ref bean="emp2"/>
+           
+           </list>
+           
+           </constructor-arg>
+           
+           </bean>
+           
+           
+           
+
+    
+</beans>
